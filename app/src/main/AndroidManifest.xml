@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.andrew_lowman.workouttimer">
+
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.WorkoutTimer">
+        <activity
+            android:label="Report Details"
+            android:name=".Activity.ReportDetails"
+            android:exported="true" />
+        <activity
+            android:label="Reports"
+            android:name=".Activity.Reports"
+            android:exported="true" />
+        <activity
+            android:label="Load Interval"
+            android:name=".Activity.LoadInterval"
+            android:exported="true" />
+        <activity
+            android:label="Interval Planner"
+            android:name=".Activity.IntervalsPlanner"
+            android:exported="true" />
+        <activity
+            android:label="Stopwatch"
+            android:name=".Activity.Watch"
+            android:exported="true"
+            android:launchMode="singleTask"/>
+        <activity
+            android:label="Timer"
+            android:name=".Activity.Timer"
+            android:exported="true"
+            android:launchMode="singleTask"/>
+        <activity
+            android:label="Add Timer"
+            android:name=".Activity.AddTimer"
+            android:exported="true" />
+
+        <service android:name=".Service.intervalService" />
+        <service android:name=".Service.timerService"/>
+
+        <activity
+            android:label="Intervals"
+            android:name=".Activity.Intervals"
+            android:exported="true"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
