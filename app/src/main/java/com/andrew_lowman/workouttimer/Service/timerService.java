@@ -49,19 +49,10 @@ public class timerService extends Service implements modelService {
         }
     }
 
-    @Override
+   /* @Override
     public void onCreate() {
         super.onCreate();
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("sendToTimerService");
-        BroadcastReceiver timerSetTimeReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                originalTime = intent.getLongExtra("originalTime",0);
-            }
-        };
-        registerReceiver(timerSetTimeReceiver,intentFilter);
-    }
+            }*/
 
     //convert long to proper format
     public String convert(long time){
