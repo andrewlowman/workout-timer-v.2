@@ -13,7 +13,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/timerTextView"
+            android:id="@+id/watchTimerTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
@@ -28,43 +28,43 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="?android:attr/listDivider"
-            app:layout_constraintTop_toBottomOf="@id/startButton"
+            app:layout_constraintTop_toBottomOf="@id/watchStartButton"
             android:layout_margin="30dp"/>
 
         <Button
-            android:id="@+id/startButton"
+            android:id="@+id/watchStartButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:text="Start"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/timerTextView" />
+            app:layout_constraintTop_toBottomOf="@id/watchTimerTextView" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/intervalButton"
+            android:id="@+id/watchIntervalButton"
             android:text="Interval"
-            app:layout_constraintLeft_toRightOf="@id/startButton"
-            app:layout_constraintTop_toTopOf="@id/startButton"
+            app:layout_constraintLeft_toRightOf="@id/watchStartButton"
+            app:layout_constraintTop_toTopOf="@id/watchStartButton"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="10dp"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/cancelButton"
+            android:id="@+id/watchCancelButton"
             android:text="Reset"
-            app:layout_constraintTop_toTopOf="@id/startButton"
-            app:layout_constraintRight_toLeftOf="@id/startButton"
+            app:layout_constraintTop_toTopOf="@id/watchStartButton"
+            app:layout_constraintRight_toLeftOf="@id/watchStartButton"
             android:layout_marginRight="15dp" />
 
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/intervalTextView"
+            android:id="@+id/watchIntervalTextView"
             android:text="00:00:000"
             app:layout_constraintTop_toBottomOf="@id/topDivider"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -75,10 +75,10 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+            android:id="@+id/watchRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/intervalTextView"
+            app:layout_constraintTop_toBottomOf="@id/watchIntervalTextView"
             android:layout_marginTop="5dp"/>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView

@@ -12,14 +12,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WorkoutTimer">
         <activity
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="Report Details"
             android:name=".Activity.ReportDetails"
             android:exported="true" />
         <activity
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="Reports"
             android:name=".Activity.Reports"
             android:exported="true" />
         <activity
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="Load Interval"
             android:name=".Activity.LoadInterval"
             android:exported="true" />
@@ -28,24 +31,29 @@
             android:name=".Activity.IntervalsPlanner"
             android:exported="true" />
         <activity
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="Stopwatch"
             android:name=".Activity.Watch"
             android:exported="true"
             android:launchMode="singleTask"/>
         <activity
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="Timer"
             android:name=".Activity.Timer"
             android:exported="true"
             android:launchMode="singleTask"/>
         <activity
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="Add Timer"
             android:name=".Activity.AddTimer"
             android:exported="true" />
 
         <service android:name=".Service.intervalService" />
         <service android:name=".Service.timerService"/>
+        <service android:name=".Service.watchService"/>
 
         <activity
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="Intervals"
             android:name=".Activity.Intervals"
             android:exported="true"

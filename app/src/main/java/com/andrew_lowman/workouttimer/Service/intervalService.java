@@ -26,18 +26,15 @@ public class intervalService extends Service implements modelService {
     private final IBinder mBinder = new LocalBinder();
 
     private static final String CHANNEL_ID = "IntervalChannel";
-    private long stopwatchMilliseconds;
-    private long originalTime;
-
-
-    private int timeRemaining = 10000;
-
+    private long milliseconds;
+    private long originalTime = 250000;
     private CountDownTimer ct;
-    private long countdownMillis;
     private long startTime;
     private long updateTime;
     private long currentTime;
     final Handler mainHandler = new Handler();
+    private boolean started = false;
+    private boolean running = false;
 
     @Nullable
     @Override
@@ -69,8 +66,7 @@ public class intervalService extends Service implements modelService {
             return String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, secs);
         }
     }
-    
-    
+
     //STOPWATCH STUFF******************************************************************
     //
     //
@@ -81,39 +77,36 @@ public class intervalService extends Service implements modelService {
         //start handler with the runnable
         mainHandler.postDelayed(mainRunnable,0);
         //current time
-        currentTime += stopwatchMilliseconds;
-    }
-
-    @Override
-    public void restartStopwatch(long time) {
-
+        currentTime += milliseconds;
     }
 
     @Override
     public void pauseStopwatch() {
-
+        mainHandler.removeCallbacks(mainRunnable);
+        running = false;
     }
 
     @Override
     public void cancelStopwatch() {
-
+        pauseStopwatch();
+        milliseconds = 0L;
+        startTime = 0L;
+        updateTime = 0L;
+        currentTime = 0L;
+        running = false;
     }
 
-    @Override
-    public void cancelCountdownTimer() {
-
-    }
 
     Runnable mainRunnable = new Runnable() {
         @Override
         public void run() {
             //subtract start from current clock
-            stopwatchMilliseconds = SystemClock.elapsedRealtime() - startTime;
+            milliseconds = SystemClock.elapsedRealtime() - startTime;
             //add to
-            updateTime = stopwatchMilliseconds + currentTime;
+            updateTime = milliseconds + currentTime;
             //intent for broadcast to activity
             Intent intentLocal = new Intent();
-            intentLocal.setAction("Counter");
+            intentLocal.setAction("IntervalTimerCounter");
             intentLocal.putExtra("timeRemaining",updateTime);
             sendBroadcast(intentLocal);
             //update notification with same time
@@ -129,23 +122,26 @@ public class intervalService extends Service implements modelService {
     //
     @Override
     public void startCountdownTimer() {
-        ct = new CountDownTimer(10000, 1) {
+        System.out.println("Start CT Timer");
+        ct = new CountDownTimer(originalTime, 1) {
 
             @Override
             public void onTick(long millisUntilFinished) {
                 //set millis global
-                countdownMillis = millisUntilFinished;
+                milliseconds = millisUntilFinished;
                 //intent for broadcast and notification
                 Intent intentLocal = new Intent();
-                intentLocal.setAction("Counter");
-                intentLocal.putExtra("timeRemaining",countdownMillis);
+                intentLocal.setAction("IntervalTimerCounter");
+                intentLocal.putExtra("timeRemaining",milliseconds);
                 sendBroadcast(intentLocal);
-                NotificationUpdate(countdownMillis);
+                NotificationUpdate(milliseconds);
             }
 
             @Override
             public void onFinish() {
-
+                Intent timerDone = new Intent();
+                timerDone.setAction("IntervalTimerDone");
+                sendBroadcast(timerDone);
             }
         };
         ct.start();
@@ -153,12 +149,49 @@ public class intervalService extends Service implements modelService {
 
     @Override
     public void pauseCountdownTimer() {
-
+        if(ct != null){
+            ct.cancel();
+        }
     }
 
     @Override
     public void restartCountdownTimer() {
+        ct = new CountDownTimer(milliseconds, 1) {
 
+            @Override
+            public void onTick(long millisUntilFinished) {
+                //set millis global
+                milliseconds = millisUntilFinished;
+                //intent for broadcast and notification
+                Intent intentLocal = new Intent();
+                intentLocal.setAction("IntervalTimerCounter");
+                intentLocal.putExtra("timeRemaining",milliseconds);
+                sendBroadcast(intentLocal);
+                NotificationUpdate(milliseconds);
+            }
+
+            @Override
+            public void onFinish() {
+                Intent timerDone = new Intent();
+                timerDone.setAction("IntervalTimerDone");
+                sendBroadcast(timerDone);
+            }
+        };
+        ct.start();
+    }
+
+    @Override
+    public void cancelCountdownTimer() {
+        ct.cancel();
+        //set time to starting time
+        Intent intentLocal = new Intent();
+        intentLocal.setAction("IntervalTimerCounter");
+        intentLocal.putExtra("timeRemaining",originalTime);
+        sendBroadcast(intentLocal);
+    }
+
+    public void setOriginalTime(long originalTime){
+        this.originalTime = originalTime;
     }
 
     //NOTIFICATION STUFF*****************************

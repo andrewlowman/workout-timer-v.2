@@ -39,7 +39,7 @@ public class timerService extends Service implements modelService {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        originalTime = intent.getLongExtra("originalTime",0);
+        //originalTime = intent.getLongExtra("originalTime",0);
         return mTimerBinder;
     }
 
@@ -180,10 +180,7 @@ public class timerService extends Service implements modelService {
     public void cancelStopwatch() {
 
     }
-    @Override
-    public void restartStopwatch(long time) {
 
-    }
     @Override
     public void startStopwatch() {
 

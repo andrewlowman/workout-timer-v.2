@@ -88,15 +88,24 @@ public class Timer extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         doUnbindService();
-        unregisterReceiver(broadcastReceiver);
-        unregisterReceiver(timerDoneReceiver);
+        try{
+            unregisterReceiver(broadcastReceiver);
+            unregisterReceiver(timerDoneReceiver);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        unregisterReceiver(broadcastReceiver);
-        unregisterReceiver(timerDoneReceiver);
+        try{
+            unregisterReceiver(broadcastReceiver);
+            unregisterReceiver(timerDoneReceiver);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
